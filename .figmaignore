@@ -1,0 +1,10 @@
+# Figmaから除外するファイル
+node_modules/
+.git/
+.env
+.env.local
+*.log
+dist/
+build/
+.cache/
+coverage/

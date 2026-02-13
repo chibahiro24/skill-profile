@@ -1,0 +1,161 @@
+{
+  "$schema": "https://schemas.figma.com/design-tokens/v1",
+  "colors": {
+    "primary": {
+      "50": { "value": "#E3F2FD", "type": "color" },
+      "100": { "value": "#BBDEFB", "type": "color" },
+      "200": { "value": "#90CAF9", "type": "color" },
+      "300": { "value": "#64B5F6", "type": "color" },
+      "400": { "value": "#42A5F5", "type": "color" },
+      "500": { "value": "#2196F3", "type": "color" },
+      "600": { "value": "#1E88E5", "type": "color" },
+      "700": { "value": "#1976D2", "type": "color" },
+      "800": { "value": "#1565C0", "type": "color" },
+      "900": { "value": "#0D47A1", "type": "color" }
+    },
+    "secondary": {
+      "50": { "value": "#F3E5F5", "type": "color" },
+      "100": { "value": "#E1BEE7", "type": "color" },
+      "200": { "value": "#CE93D8", "type": "color" },
+      "300": { "value": "#BA68C8", "type": "color" },
+      "400": { "value": "#AB47BC", "type": "color" },
+      "500": { "value": "#9C27B0", "type": "color" },
+      "600": { "value": "#8E24AA", "type": "color" },
+      "700": { "value": "#7B1FA2", "type": "color" },
+      "800": { "value": "#6A1B9A", "type": "color" },
+      "900": { "value": "#4A148C", "type": "color" }
+    },
+    "neutral": {
+      "0": { "value": "#FFFFFF", "type": "color" },
+      "50": { "value": "#FAFAFA", "type": "color" },
+      "100": { "value": "#F5F5F5", "type": "color" },
+      "200": { "value": "#EEEEEE", "type": "color" },
+      "300": { "value": "#E0E0E0", "type": "color" },
+      "400": { "value": "#BDBDBD", "type": "color" },
+      "500": { "value": "#9E9E9E", "type": "color" },
+      "600": { "value": "#757575", "type": "color" },
+      "700": { "value": "#616161", "type": "color" },
+      "800": { "value": "#424242", "type": "color" },
+      "900": { "value": "#212121", "type": "color" },
+      "1000": { "value": "#000000", "type": "color" }
+    },
+    "success": {
+      "light": { "value": "#81C784", "type": "color" },
+      "main": { "value": "#4CAF50", "type": "color" },
+      "dark": { "value": "#388E3C", "type": "color" }
+    },
+    "warning": {
+      "light": { "value": "#FFB74D", "type": "color" },
+      "main": { "value": "#FF9800", "type": "color" },
+      "dark": { "value": "#F57C00", "type": "color" }
+    },
+    "error": {
+      "light": { "value": "#E57373", "type": "color" },
+      "main": { "value": "#F44336", "type": "color" },
+      "dark": { "value": "#D32F2F", "type": "color" }
+    },
+    "info": {
+      "light": { "value": "#64B5F6", "type": "color" },
+      "main": { "value": "#2196F3", "type": "color" },
+      "dark": { "value": "#1976D2", "type": "color" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": {
+        "value": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "type": "fontFamily"
+      },
+      "monospace": {
+        "value": "'Fira Code', 'SF Mono', 'Courier New', monospace",
+        "type": "fontFamily"
+      }
+    },
+    "fontSize": {
+      "xs": { "value": "12px", "type": "dimension" },
+      "sm": { "value": "14px", "type": "dimension" },
+      "base": { "value": "16px", "type": "dimension" },
+      "lg": { "value": "18px", "type": "dimension" },
+      "xl": { "value": "20px", "type": "dimension" },
+      "2xl": { "value": "24px", "type": "dimension" },
+      "3xl": { "value": "30px", "type": "dimension" },
+      "4xl": { "value": "36px", "type": "dimension" },
+      "5xl": { "value": "48px", "type": "dimension" },
+      "6xl": { "value": "60px", "type": "dimension" }
+    },
+    "fontWeight": {
+      "light": { "value": "300", "type": "fontWeight" },
+      "regular": { "value": "400", "type": "fontWeight" },
+      "medium": { "value": "500", "type": "fontWeight" },
+      "semibold": { "value": "600", "type": "fontWeight" },
+      "bold": { "value": "700", "type": "fontWeight" },
+      "extrabold": { "value": "800", "type": "fontWeight" }
+    },
+    "lineHeight": {
+      "tight": { "value": "1.25", "type": "number" },
+      "normal": { "value": "1.5", "type": "number" },
+      "relaxed": { "value": "1.75", "type": "number" },
+      "loose": { "value": "2", "type": "number" }
+    },
+    "letterSpacing": {
+      "tight": { "value": "-0.02em", "type": "dimension" },
+      "normal": { "value": "0", "type": "dimension" },
+      "wide": { "value": "0.02em", "type": "dimension" },
+      "wider": { "value": "0.05em", "type": "dimension" }
+    }
+  },
+  "spacing": {
+    "0": { "value": "0px", "type": "dimension" },
+    "xs": { "value": "4px", "type": "dimension" },
+    "sm": { "value": "8px", "type": "dimension" },
+    "md": { "value": "16px", "type": "dimension" },
+    "lg": { "value": "24px", "type": "dimension" },
+    "xl": { "value": "32px", "type": "dimension" },
+    "2xl": { "value": "48px", "type": "dimension" },
+    "3xl": { "value": "64px", "type": "dimension" },
+    "4xl": { "value": "96px", "type": "dimension" }
+  },
+  "borderRadius": {
+    "none": { "value": "0px", "type": "dimension" },
+    "sm": { "value": "4px", "type": "dimension" },
+    "md": { "value": "8px", "type": "dimension" },
+    "lg": { "value": "12px", "type": "dimension" },
+    "xl": { "value": "16px", "type": "dimension" },
+    "2xl": { "value": "24px", "type": "dimension" },
+    "full": { "value": "9999px", "type": "dimension" }
+  },
+  "shadows": {
+    "sm": {
+      "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      "type": "boxShadow"
+    },
+    "md": {
+      "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "type": "boxShadow"
+    },
+    "lg": {
+      "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "type": "boxShadow"
+    },
+    "xl": {
+      "value": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      "type": "boxShadow"
+    }
+  },
+  "breakpoints": {
+    "mobile": { "value": "320px", "type": "dimension" },
+    "tablet": { "value": "768px", "type": "dimension" },
+    "desktop": { "value": "1024px", "type": "dimension" },
+    "wide": { "value": "1440px", "type": "dimension" },
+    "ultrawide": { "value": "1920px", "type": "dimension" }
+  },
+  "zIndex": {
+    "dropdown": { "value": "1000", "type": "number" },
+    "sticky": { "value": "1020", "type": "number" },
+    "fixed": { "value": "1030", "type": "number" },
+    "modalBackdrop": { "value": "1040", "type": "number" },
+    "modal": { "value": "1050", "type": "number" },
+    "popover": { "value": "1060", "type": "number" },
+    "tooltip": { "value": "1070", "type": "number" }
+  }
+}
