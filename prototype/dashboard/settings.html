@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定 - Skill Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .settings-nav {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--border-secondary);
+            overflow-x: auto;
+        }
+
+        .settings-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .settings-tab.active {
+            color: var(--primary-500);
+            border-bottom-color: var(--primary-500);
+        }
+
+        .settings-tab:hover:not(.active) {
+            color: var(--text-primary);
+        }
+
+        .settings-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .section-description {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: var(--spacing-xs);
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .toggle-info {
+            flex: 1;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .toggle-description {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-500);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            left: 27px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-600);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        .danger-zone {
+            border-color: rgba(244, 67, 54, 0.3);
+        }
+
+        .danger-zone .section-title {
+            color: #f44336;
+        }
+
+        .api-key {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .api-key-value {
+            flex: 1;
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--primary-500);
+        }
+
+        .btn-copy {
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- サイドバー -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">📊</div>
+                    <span class="logo-text">Skill Profile</span>
+                </a>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            </div>
+            
+            <nav class="nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">メイン</div>
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">ダッシュボード</span>
+                    </a>
+                    <a href="profile.html" class="nav-item">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-text">プロフィール</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">スキル管理</div>
+                    <a href="skills.html" class="nav-item">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">スキル一覧</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <span class="nav-icon">📁</span>
+                        <span class="nav-text">プロジェクト</span>
+                    </a>
+                    <a href="activities.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">活動ログ</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">分析</div>
+                    <a href="analytics.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">統計・分析</span>
+                    </a>
+                    <a href="growth.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span class="nav-text">成長トラッキング</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">設定</div>
+                    <a href="settings.html" class="nav-item active">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="main">
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">設定</h1>
+                </div>
+                <div class="header-right">
+                    <div class="header-search">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="検索...">
+                    </div>
+                    <button class="icon-button">
+                        <span>🔔</span>
+                        <span class="notification-badge"></span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar">HT</div>
+                        <div class="user-info">
+                            <div class="user-name">山田 太郎</div>
+                            <div class="user-role">Senior Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- 設定ナビゲーション -->
+                <div class="settings-nav">
+                    <div class="settings-tab active">
+                        <span>👤</span>
+                        <span>アカウント</span>
+                    </div>
+                    <div class="settings-tab">
+                        <span>🔒</span>
+                        <span>プライバシー</span>
+                    </div>
+                    <div class="settings-tab">
+                        <span>🔔</span>
+                        <span>通知</span>
+                    </div>
+                    <div class="settings-tab">
+                        <span>🎨</span>
+                        <span>表示</span>
+                    </div>
+                    <div class="settings-tab">
+                        <span>🔗</span>
+                        <span>連携</span>
+                    </div>
+                    <div class="settings-tab">
+                        <span>🔐</span>
+                        <span>セキュリティ</span>
+                    </div>
+                </div>
+
+                <!-- アカウント設定 -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3 class="section-title">アカウント情報</h3>
+                        <p class="section-description">基本的なアカウント情報を管理します</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">ユーザー名</label>
+                        <input type="text" class="form-input" value="yamada_taro" placeholder="ユーザー名">
+                        <div class="form-help">プロフィールURLに使用されます: skillprofile.com/yamada_taro</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">メールアドレス</label>
+                        <input type="email" class="form-input" value="yamada@example.com" placeholder="メールアドレス">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">氏名</label>
+                        <input type="text" class="form-input" value="山田 太郎" placeholder="氏名">
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary">変更を保存</button>
+                        <button class="btn btn-secondary">キャンセル</button>
+                    </div>
+                </div>
+
+                <!-- プライバシー設定 -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3 class="section-title">プライバシー設定</h3>
+                        <p class="section-description">プロフィールの公開範囲を設定します</p>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">プロフィールを公開</div>
+                            <div class="toggle-description">検索エンジンに表示され、誰でもプロフィールを閲覧できます</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">スキル情報を公開</div>
+                            <div class="toggle-description">登録したスキルを他のユーザーに表示します</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">プロジェクト情報を公開</div>
+                            <div class="toggle-description">プロジェクト実績を他のユーザーに表示します</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">連絡先を公開</div>
+                            <div class="toggle-description">メールアドレスや電話番号を表示します</div>
+                        </div>
+                        <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+
+                <!-- 通知設定 -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3 class="section-title">通知設定</h3>
+                        <p class="section-description">受信する通知の種類を選択します</p>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">メール通知</div>
+                            <div class="toggle-description">重要な更新をメールで受け取ります</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">プッシュ通知</div>
+                            <div class="toggle-description">ブラウザにプッシュ通知を表示します</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+
+                    <div class="toggle-container">
+                        <div class="toggle-info">
+                            <div class="toggle-label">週次レポート</div>
+                            <div class="toggle-description">毎週の活動サマリーを受け取ります</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+
+                <!-- API設定 -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3 class="section-title">API設定</h3>
+                        <p class="section-description">外部アプリケーションとの連携に使用します</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">APIキー</label>
+                        <div class="api-key">
+                            <div class="api-key-value">••••••••••••••••••••••••••••••••••••••••</div>
+                            <button class="btn-copy">📋</button>
+                        </div>
+                        <div class="form-help">このキーは他の人と共有しないでください</div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary">新しいキーを生成</button>
+                    </div>
+                </div>
+
+                <!-- 危険な設定 -->
+                <div class="settings-section danger-zone">
+                    <div class="section-header">
+                        <h3 class="section-title">危険な設定</h3>
+                        <p class="section-description">これらの操作は取り消すことができません</p>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-danger">アカウントを削除</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // 設定タブの切り替え
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

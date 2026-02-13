@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール - Skill Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .profile-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .profile-top {
+            display: flex;
+            gap: var(--spacing-xl);
+            align-items: flex-start;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 32px;
+            height: 32px;
+            background: var(--primary-500);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid var(--bg-secondary);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .profile-title {
+            font-size: 18px;
+            color: var(--primary-500);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .profile-bio {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: var(--spacing-xl);
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-500);
+        }
+
+        .profile-stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: var(--spacing-xs);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-600);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(33, 150, 243, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-500);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 2px;
+        }
+
+        .contact-value {
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .social-link:hover {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .profile-top {
+                flex-direction: column;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-stats {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- サイドバー -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">📊</div>
+                    <span class="logo-text">Skill Profile</span>
+                </a>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            </div>
+            
+            <nav class="nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">メイン</div>
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">ダッシュボード</span>
+                    </a>
+                    <a href="profile.html" class="nav-item active">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-text">プロフィール</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">スキル管理</div>
+                    <a href="skills.html" class="nav-item">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">スキル一覧</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <span class="nav-icon">📁</span>
+                        <span class="nav-text">プロジェクト</span>
+                    </a>
+                    <a href="activities.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">活動ログ</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">分析</div>
+                    <a href="analytics.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">統計・分析</span>
+                    </a>
+                    <a href="growth.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span class="nav-text">成長トラッキング</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">設定</div>
+                    <a href="settings.html" class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="main">
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">プロフィール</h1>
+                </div>
+                <div class="header-right">
+                    <div class="header-search">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="検索...">
+                    </div>
+                    <button class="icon-button">
+                        <span>🔔</span>
+                        <span class="notification-badge"></span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar">HT</div>
+                        <div class="user-info">
+                            <div class="user-name">山田 太郎</div>
+                            <div class="user-role">Senior Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- プロフィールヘッダー -->
+                <div class="profile-header">
+                    <div class="profile-top">
+                        <div class="profile-avatar">
+                            HT
+                            <div class="avatar-edit">✏️</div>
+                        </div>
+                        <div class="profile-info">
+                            <h2 class="profile-name">山田 太郎</h2>
+                            <div class="profile-title">Senior Full-stack Developer</div>
+                            <p class="profile-bio">
+                                10年以上のWeb開発経験を持つフルスタック開発者。React、Node.js、Pythonを得意とし、
+                                大規模なWebアプリケーションの設計から実装まで幅広く対応。
+                                チームマネジメントと技術選定にも従事。
+                            </p>
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <div class="profile-stat-value">48</div>
+                                    <div class="profile-stat-label">スキル</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="profile-stat-value">23</div>
+                                    <div class="profile-stat-label">プロジェクト</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="profile-stat-value">156</div>
+                                    <div class="profile-stat-label">活動日数</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="profile-stat-value">1.2K</div>
+                                    <div class="profile-stat-label">閲覧数</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary">編集</button>
+                            <button class="btn btn-secondary">共有</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基本情報 -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">基本情報</h3>
+                        <button class="btn btn-secondary">編集</button>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">氏名</div>
+                            <div class="info-value">山田 太郎</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">所在地</div>
+                            <div class="info-value">東京都渋谷区</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">職種</div>
+                            <div class="info-value">Senior Full-stack Developer</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">経験年数</div>
+                            <div class="info-value">10年</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">希望勤務形態</div>
+                            <div class="info-value">リモート / ハイブリッド</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">稼働可能時間</div>
+                            <div class="info-value">週40時間</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <!-- 連絡先情報 -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h3 class="section-title">連絡先</h3>
+                            <button class="btn btn-secondary">編集</button>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-info">
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value">yamada@example.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-info">
+                                <div class="contact-label">電話</div>
+                                <div class="contact-value">090-1234-5678</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🌐</div>
+                            <div class="contact-info">
+                                <div class="contact-label">Website</div>
+                                <div class="contact-value">https://yamada.dev</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ソーシャルリンク -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h3 class="section-title">ソーシャルリンク</h3>
+                            <button class="btn btn-secondary">編集</button>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🐙</div>
+                            <div class="contact-info">
+                                <div class="contact-label">GitHub</div>
+                                <div class="contact-value">github.com/yamada</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💼</div>
+                            <div class="contact-info">
+                                <div class="contact-label">LinkedIn</div>
+                                <div class="contact-value">linkedin.com/in/yamada</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🐦</div>
+                            <div class="contact-info">
+                                <div class="contact-label">Twitter</div>
+                                <div class="contact-value">@yamada_dev</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>

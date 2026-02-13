@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monotone Style - Skill Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-radius: 16px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            padding: 48px;
+            display: flex;
+            gap: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 左側セクション */
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 150px;
+            z-index: 1;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .basic-info {
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .basic-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .basic-info-label {
+            font-size: 11px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .basic-info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .level-bar {
+            margin-top: 8px;
+        }
+
+        .level-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffffff, #cccccc);
+            border-radius: 3px;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 右側セクション */
+        .right-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .name-section {
+            color: #ffffff;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .role {
+            font-size: 15px;
+            font-weight: 500;
+            color: #999999;
+            letter-spacing: 0.3px;
+        }
+
+        .overall-score {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overall-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .overall-label {
+            font-size: 10px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* スキルバー */
+        .skills-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px;
+            transition: transform 0.2s ease-out, background 0.2s ease-out;
+            border-radius: 8px;
+        }
+
+        .skill-item:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .skill-name {
+            width: 140px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #cccccc;
+            flex-shrink: 0;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease-out, transform 0.2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover .skill-bar-fill {
+            transform: scaleX(1.01);
+        }
+
+        /* スキルバーのグラデーション - モノトーン */
+        .skill-high .skill-bar-fill {
+            background: linear-gradient(90deg, #ffffff, #e0e0e0);
+            box-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-medium .skill-bar-fill {
+            background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+            box-shadow: 
+                0 0 15px rgba(208, 208, 208, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .skill-low .skill-bar-fill {
+            background: linear-gradient(90deg, #a0a0a0, #808080);
+            box-shadow: 
+                0 0 10px rgba(160, 160, 160, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-value {
+            width: 45px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ツールチップ */
+        .skill-item {
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.95);
+        }
+
+        .skill-item:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        .tooltip strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .tooltip-line {
+            color: #cccccc;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .profile-card {
+                flex-direction: column;
+                padding: 28px;
+                gap: 28px;
+            }
+
+            .left-section {
+                align-items: center;
+                text-align: center;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .basic-info {
+                align-items: center;
+                width: 100%;
+            }
+
+            .basic-info-item {
+                width: 100%;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+
+            .name-section {
+                text-align: center;
+            }
+
+            .name {
+                font-size: 24px;
+            }
+
+            .overall-score {
+                width: 80px;
+                height: 80px;
+            }
+
+            .overall-number {
+                font-size: 30px;
+            }
+
+            .skill-name {
+                width: 90px;
+                font-size: 13px;
+            }
+
+            .skill-value {
+                font-size: 18px;
+            }
+
+            .skill-bar {
+                height: 28px;
+            }
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* テーマバリエーション */
+        .profile-card.light {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-card.light:hover {
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .profile-card.light .name,
+        .profile-card.light .basic-info-value,
+        .profile-card.light .skill-value,
+        .profile-card.light .overall-number {
+            color: #1a1a1a;
+        }
+
+        .profile-card.light .role,
+        .profile-card.light .basic-info-label,
+        .profile-card.light .overall-label,
+        .profile-card.light .skill-name {
+            color: #666666;
+        }
+
+        .profile-card.light .avatar {
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #1a1a1a;
+        }
+
+        .profile-card.light .basic-info-item {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-card.light .skill-bar {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-card.light .rank-badge {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #1a1a1a;
+        }
+
+        .profile-card.light .overall-score {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-card.light .header {
+            border-bottom-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* 切り替えボタン */
+        .theme-switcher {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 12px 24px;
+            margin: 0 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .theme-btn.active {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* パーセンテージバッジ */
+        .skill-percentage {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.6);
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-switcher">
+            <button class="theme-btn active" onclick="changeTheme('dark')">Dark</button>
+            <button class="theme-btn" onclick="changeTheme('light')">Light</button>
+        </div>
+
+        <div class="profile-card" id="profileCard">
+            <!-- 左側セクション -->
+            <div class="left-section">
+                <div class="avatar">
+                    <!-- アバター画像を入れる場合は <img src="avatar.jpg" alt="Avatar"> -->
+                    YT
+                </div>
+
+                <div class="basic-info">
+                    <div class="basic-info-item">
+                        <div class="basic-info-label">Level</div>
+                        <div class="basic-info-value">42</div>
+                    </div>
+
+                    <div class="basic-info-item level-bar">
+                        <div class="basic-info-label">Experience</div>
+                        <div class="basic-info-value">12,500 / 15,000</div>
+                        <div class="level-progress">
+                            <div class="level-progress-fill" style="width: 83%"></div>
+                        </div>
+                    </div>
+
+                    <div class="basic-info-item">
+                        <div class="basic-info-label">Rank</div>
+                        <div class="rank-badge">
+                            ⬡ Expert
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側セクション -->
+            <div class="right-section">
+                <div class="header">
+                    <div class="name-section">
+                        <div class="name">山田 太郎</div>
+                        <div class="role">Full Stack Engineer</div>
+                    </div>
+                    <div class="overall-score">
+                        <div class="overall-number">85</div>
+                        <div class="overall-label">Overall</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">JavaScript</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 92%">
+                                <span class="skill-percentage">92%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">92</div>
+                        <div class="tooltip">
+                            <strong>JavaScript</strong>
+                            <div class="tooltip-line">Level: Expert</div>
+                            <div class="tooltip-line">Experience: 5 years</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">TypeScript</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 85%">
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">85</div>
+                        <div class="tooltip">
+                            <strong>TypeScript</strong>
+                            <div class="tooltip-line">Level: Advanced</div>
+                            <div class="tooltip-line">Experience: 3 years</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">React</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 90%">
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">90</div>
+                        <div class="tooltip">
+                            <strong>React</strong>
+                            <div class="tooltip-line">Level: Expert</div>
+                            <div class="tooltip-line">Experience: 4 years</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Node.js</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 88%">
+                                <span class="skill-percentage">88%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">88</div>
+                        <div class="tooltip">
+                            <strong>Node.js</strong>
+                            <div class="tooltip-line">Level: Advanced</div>
+                            <div class="tooltip-line">Experience: 4 years</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-low">
+                        <div class="skill-name">Python</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 75%">
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">75</div>
+                        <div class="tooltip">
+                            <strong>Python</strong>
+                            <div class="tooltip-line">Level: Intermediate</div>
+                            <div class="tooltip-line">Experience: 2 years</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Leadership</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 82%">
+                                <span class="skill-percentage">82%</span>
+                            </div>
+                        </div>
+                        <div class="skill-value">82</div>
+                        <div class="tooltip">
+                            <strong>Leadership</strong>
+                            <div class="tooltip-line">Level: Advanced</div>
+                            <div class="tooltip-line">Experience: Team Lead</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ページ読み込み時のアニメーション
+        window.addEventListener('load', () => {
+            const fills = document.querySelectorAll('.skill-bar-fill');
+            fills.forEach((fill, index) => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 300 + index * 100);
+            });
+
+            const levelFill = document.querySelector('.level-progress-fill');
+            const levelWidth = levelFill.style.width;
+            levelFill.style.width = '0%';
+            setTimeout(() => {
+                levelFill.style.width = levelWidth;
+            }, 300);
+        });
+
+        // テーマ切り替え
+        function changeTheme(theme) {
+            const card = document.getElementById('profileCard');
+            card.className = 'profile-card';
+            if (theme !== 'dark') {
+                card.classList.add(theme);
+            }
+
+            // ボタンのアクティブ状態を更新
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // 背景色も変更
+            if (theme === 'light') {
+                document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)';
+            } else {
+                document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
+            }
+        }
+    </script>
+</body>
+</html>

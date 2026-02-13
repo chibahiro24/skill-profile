@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Profile - Full View</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ヘッダーカード */
+        .header-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 48px;
+            display: flex;
+            gap: 48px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        .header-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 左側セクション */
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 200px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .quick-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .stat-value.small {
+            font-size: 16px;
+        }
+
+        /* 右側プロフィール */
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .name-section h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .role {
+            font-size: 16px;
+            color: #999999;
+            margin-bottom: 4px;
+        }
+
+        .location {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .overall-badge {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overall-number {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .overall-label {
+            font-size: 10px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        .bio {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .external-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .link-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        /* グリッドレイアウト */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* カードスタイル */
+        .card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .card-action {
+            font-size: 13px;
+            color: #999999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .card-action:hover {
+            color: #ffffff;
+        }
+
+        /* スキルバー */
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .skill-name {
+            width: 140px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #cccccc;
+            flex-shrink: 0;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease-out;
+        }
+
+        .skill-high .skill-bar-fill {
+            background: linear-gradient(90deg, #ffffff, #e0e0e0);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-medium .skill-bar-fill {
+            background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+            box-shadow: 0 0 10px rgba(208, 208, 208, 0.15);
+        }
+
+        .skill-low .skill-bar-fill {
+            background: linear-gradient(90deg, #a0a0a0, #808080);
+        }
+
+        .skill-value {
+            width: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: right;
+        }
+
+        /* プロジェクトカード */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .project-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .project-role {
+            font-size: 13px;
+            color: #999999;
+            margin-bottom: 8px;
+        }
+
+        .project-period {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 12px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-size: 11px;
+            color: #cccccc;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 資格リスト */
+        .cert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cert-item {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cert-info {
+            flex: 1;
+        }
+
+        .cert-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .cert-date {
+            font-size: 12px;
+            color: #999999;
+        }
+
+        .cert-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* アクティビティタイムライン */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            margin-top: 6px;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: #999999;
+            margin-bottom: 6px;
+        }
+
+        .timeline-date {
+            font-size: 11px;
+            color: #666666;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header-card {
+                flex-direction: column;
+                padding: 28px;
+                gap: 28px;
+            }
+
+            .left-section {
+                align-items: center;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-name {
+                width: 100px;
+                font-size: 13px;
+            }
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-card,
+        .card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダーカード -->
+        <div class="header-card">
+            <div class="left-section">
+                <div class="avatar">YT</div>
+                
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Projects</div>
+                        <div class="stat-value">24</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Skills</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Certificates</div>
+                        <div class="stat-value">8</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-header">
+                    <div class="name-section">
+                        <h1>山田 太郎</h1>
+                        <div class="role">Full Stack Engineer / Tech Lead</div>
+                        <div class="location">📍 Tokyo, Japan</div>
+                    </div>
+                    <div class="overall-badge">
+                        <div class="overall-number">85</div>
+                        <div class="overall-label">Overall</div>
+                    </div>
+                </div>
+
+                <div class="bio">
+                    10年以上の経験を持つフルスタックエンジニア。モダンなWeb技術とクラウドインフラに精通し、チームリーダーとして複数のプロジェクトを成功に導いた実績があります。ユーザー中心設計とアジャイル開発を重視し、ビジネス価値の最大化に貢献します。
+                </div>
+
+                <div class="external-links">
+                    <a href="#" class="link-btn">
+                        <span>⚡</span> GitHub
+                    </a>
+                    <a href="#" class="link-btn">
+                        <span>💼</span> LinkedIn
+                    </a>
+                    <a href="#" class="link-btn">
+                        <span>📝</span> Blog
+                    </a>
+                    <a href="#" class="link-btn">
+                        <span>🐦</span> Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- スキルセクション -->
+        <div class="content-grid">
+            <!-- 技術スキル -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Technical Skills</div>
+                    <a href="#" class="card-action">View All →</a>
+                </div>
+                <div class="skills-list">
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">JavaScript</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 92%"></div>
+                        </div>
+                        <div class="skill-value">92</div>
+                    </div>
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">TypeScript</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 85%"></div>
+                        </div>
+                        <div class="skill-value">85</div>
+                    </div>
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">React</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 90%"></div>
+                        </div>
+                        <div class="skill-value">90</div>
+                    </div>
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Node.js</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 88%"></div>
+                        </div>
+                        <div class="skill-value">88</div>
+                    </div>
+                    <div class="skill-item skill-low">
+                        <div class="skill-name">Python</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 75%"></div>
+                        </div>
+                        <div class="skill-value">75</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ソフトスキル -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Soft Skills</div>
+                    <a href="#" class="card-action">View All →</a>
+                </div>
+                <div class="skills-list">
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">Leadership</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 88%"></div>
+                        </div>
+                        <div class="skill-value">88</div>
+                    </div>
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Communication</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 85%"></div>
+                        </div>
+                        <div class="skill-value">85</div>
+                    </div>
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">Problem Solving</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 90%"></div>
+                        </div>
+                        <div class="skill-value">90</div>
+                    </div>
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Time Management</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 82%"></div>
+                        </div>
+                        <div class="skill-value">82</div>
+                    </div>
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">Teamwork</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 86%"></div>
+                        </div>
+                        <div class="skill-value">86</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- プロジェクト＆資格 -->
+        <div class="content-grid">
+            <!-- プロジェクト経験 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Recent Projects</div>
+                    <a href="#" class="card-action">View All →</a>
+                </div>
+                <div class="project-list">
+                    <div class="project-item">
+                        <div class="project-name">E-Commerce Platform Renewal</div>
+                        <div class="project-role">Tech Lead / Full Stack Engineer</div>
+                        <div class="project-period">2024.01 - 2024.12 (1 year)</div>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">Microservices</span>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">Mobile App Development</div>
+                        <div class="project-role">Lead Developer</div>
+                        <div class="project-period">2023.06 - 2023.12 (6 months)</div>
+                        <div class="project-tags">
+                            <span class="tag">React Native</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">GraphQL</span>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">Internal Tool Development</div>
+                        <div class="project-role">Full Stack Engineer</div>
+                        <div class="project-period">2023.01 - 2023.05 (5 months)</div>
+                        <div class="project-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 資格・証明書 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Certificates</div>
+                    <a href="#" class="card-action">View All →</a>
+                </div>
+                <div class="cert-list">
+                    <div class="cert-item">
+                        <div class="cert-info">
+                            <div class="cert-name">AWS Certified Solutions Architect</div>
+                            <div class="cert-date">取得日: 2024.03 | 有効期限: 2027.03</div>
+                        </div>
+                        <div class="cert-badge">☁️</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-info">
+                            <div class="cert-name">Google Professional Cloud Architect</div>
+                            <div class="cert-date">取得日: 2023.11 | 有効期限: 2025.11</div>
+                        </div>
+                        <div class="cert-badge">🌐</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-info">
+                            <div class="cert-name">PMP (Project Management Professional)</div>
+                            <div class="cert-date">取得日: 2023.06 | 有効期限: 2026.06</div>
+                        </div>
+                        <div class="cert-badge">📊</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-info">
+                            <div class="cert-name">Certified ScrumMaster (CSM)</div>
+                            <div class="cert-date">取得日: 2022.09 | 生涯有効</div>
+                        </div>
+                        <div class="cert-badge">🔄</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- アクティビティ -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Recent Activities</div>
+                <a href="#" class="card-action">View All →</a>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">新しい資格を取得しました</div>
+                        <div class="timeline-desc">AWS Certified Solutions Architect - Professional</div>
+                        <div class="timeline-date">2024.03.15</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">プロジェクトを完了しました</div>
+                        <div class="timeline-desc">E-Commerce Platform Renewal - フェーズ2完了</div>
+                        <div class="timeline-date">2024.02.28</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">GitHubに新しいリポジトリを公開</div>
+                        <div class="timeline-desc">react-performance-toolkit - パフォーマンス最適化ツール</div>
+                        <div class="timeline-date">2024.02.10</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">技術記事を投稿しました</div>
+                        <div class="timeline-desc">"Reactパフォーマンス最適化の実践テクニック" - 500いいね</div>
+                        <div class="timeline-date">2024.01.20</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ページ読み込み時のアニメーション
+        window.addEventListener('load', () => {
+            const fills = document.querySelectorAll('.skill-bar-fill');
+            fills.forEach((fill, index) => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 300 + index * 50);
+            });
+        });
+    </script>
+</body>
+</html>

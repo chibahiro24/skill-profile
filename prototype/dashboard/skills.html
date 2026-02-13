@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スキル一覧 - Skill Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .toolbar {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .filter-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .btn-add {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--primary-500);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-add:hover {
+            background: var(--primary-600);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .skill-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            border-color: var(--primary-500);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(33, 150, 243, 0.2);
+        }
+
+        .skill-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(33, 150, 243, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .skill-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .skill-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .skill-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .skill-level-bar {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .skill-level-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+            font-size: 13px;
+        }
+
+        .level-name {
+            color: var(--text-secondary);
+        }
+
+        .level-value {
+            color: var(--primary-500);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-700));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .skill-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            color: var(--text-tertiary);
+            font-size: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .category-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .category-tab.active {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+        }
+
+        .category-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-primary);
+        }
+
+        .tab-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .filter-group {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- サイドバー -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">📊</div>
+                    <span class="logo-text">Skill Profile</span>
+                </a>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            </div>
+            
+            <nav class="nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">メイン</div>
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">ダッシュボード</span>
+                    </a>
+                    <a href="profile.html" class="nav-item">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-text">プロフィール</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">スキル管理</div>
+                    <a href="skills.html" class="nav-item active">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">スキル一覧</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <span class="nav-icon">📁</span>
+                        <span class="nav-text">プロジェクト</span>
+                    </a>
+                    <a href="activities.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">活動ログ</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">分析</div>
+                    <a href="analytics.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">統計・分析</span>
+                    </a>
+                    <a href="growth.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span class="nav-text">成長トラッキング</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">設定</div>
+                    <a href="settings.html" class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="main">
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">スキル一覧</h1>
+                </div>
+                <div class="header-right">
+                    <div class="header-search">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="検索...">
+                    </div>
+                    <button class="icon-button">
+                        <span>🔔</span>
+                        <span class="notification-badge"></span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar">HT</div>
+                        <div class="user-info">
+                            <div class="user-name">山田 太郎</div>
+                            <div class="user-role">Senior Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- ツールバー -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="スキルを検索...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">すべて</button>
+                        <button class="filter-btn">Expert</button>
+                        <button class="filter-btn">Advanced</button>
+                        <button class="filter-btn">Intermediate</button>
+                    </div>
+                    <button class="btn-add">
+                        <span>➕</span>
+                        <span>スキルを追加</span>
+                    </button>
+                </div>
+
+                <!-- カテゴリタブ -->
+                <div class="category-tabs">
+                    <div class="category-tab active">
+                        <span>🌐</span>
+                        <span>すべて</span>
+                        <span class="tab-count">48</span>
+                    </div>
+                    <div class="category-tab">
+                        <span>💻</span>
+                        <span>プログラミング言語</span>
+                        <span class="tab-count">12</span>
+                    </div>
+                    <div class="category-tab">
+                        <span>🔧</span>
+                        <span>フレームワーク</span>
+                        <span class="tab-count">15</span>
+                    </div>
+                    <div class="category-tab">
+                        <span>🗄️</span>
+                        <span>データベース</span>
+                        <span class="tab-count">8</span>
+                    </div>
+                    <div class="category-tab">
+                        <span>☁️</span>
+                        <span>クラウド</span>
+                        <span class="tab-count">6</span>
+                    </div>
+                    <div class="category-tab">
+                        <span>🛠️</span>
+                        <span>ツール</span>
+                        <span class="tab-count">7</span>
+                    </div>
+                </div>
+
+                <!-- スキルカードグリッド -->
+                <div class="skills-grid">
+                    <!-- React.js -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">⚛️</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">React.js</h3>
+                        <span class="skill-category">フレームワーク</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>5年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>12プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TypeScript -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">📘</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">TypeScript</h3>
+                        <span class="skill-category">プログラミング言語</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>4年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>15プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Node.js -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">🟩</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">Node.js</h3>
+                        <span class="skill-category">ランタイム</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>6年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>18プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">🐍</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">Python</h3>
+                        <span class="skill-category">プログラミング言語</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Intermediate</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>3年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>8プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Docker -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">🐳</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">Docker</h3>
+                        <span class="skill-category">ツール</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>4年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>20プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AWS -->
+                    <div class="skill-card">
+                        <div class="skill-card-header">
+                            <div class="skill-icon">☁️</div>
+                            <div class="skill-actions">
+                                <button class="action-btn">✏️</button>
+                                <button class="action-btn">🗑️</button>
+                            </div>
+                        </div>
+                        <h3 class="skill-name">Amazon Web Services</h3>
+                        <span class="skill-category">クラウド</span>
+                        <div class="skill-level-bar">
+                            <div class="skill-level-label">
+                                <span class="level-name">習熟度</span>
+                                <span class="level-value">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span>
+                                <span>5年</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📁</span>
+                                <span>14プロジェクト</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // カテゴリタブの切り替え
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // フィルターボタンの切り替え
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

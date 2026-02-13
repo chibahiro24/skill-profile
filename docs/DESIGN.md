@@ -277,10 +277,28 @@ Figma連携を効率化するプラグイン：
 - **タッチターゲット**: 最小44x44px
 - **フォーカス状態**: キーボード操作時の視覚的フィードバック
 
+## FIFAスタイルデザイン
+
+スキルプロファイル表示には、FIFAなどのスポーツゲームのUIデザインを参考にした特別なデザインを採用します。
+
+### 関連ドキュメント
+- **[FIFAスタイルデザイン仕様書](./fifa-style-design-spec.md)** - 詳細な仕様と実装ガイド
+- **[Figmaクイックスタートガイド](./fifa-style-figma-quickstart.md)** - 約2時間で作成できるステップバイステップガイド
+
+### 主な特徴
+- アバターを左上に配置
+- スキルを数値バーで視覚化（0-100）
+- グラデーション背景とグロー効果
+- インタラクティブなホバーエフェクト
+- ゲーミフィケーション要素（レベル、ランク、XP）
+
+---
+
 ## リソース
 
 ### Figmaファイルリンク
 - [デザインシステム](#) - 準備中
+- [FIFAスタイルデザイン](#) - 準備中
 - [ワイヤーフレーム](#) - 準備中
 - [UIデザイン](#) - 準備中
 - [プロトタイプ](#) - 準備中
@@ -290,3 +308,4 @@ Figma連携を効率化するプラグイン：
 - [Figma Dev Mode](https://help.figma.com/hc/en-us/articles/15023124644247-Guide-to-Dev-Mode)
 - [Material Design](https://m3.material.io/)
 - [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
+- [FIFA Ultimate Team Card Design](https://www.ea.com/games/fifa)

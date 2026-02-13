@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Profile - Monotone Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .profile-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 48px;
+            display: flex;
+            gap: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 左側セクション */
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 150px;
+            z-index: 1;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .basic-info {
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .basic-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .basic-info-label {
+            font-size: 11px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .basic-info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .level-bar {
+            margin-top: 8px;
+        }
+
+        .level-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffffff, #cccccc);
+            border-radius: 3px;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 右側セクション */
+        .right-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .name-section {
+            color: #ffffff;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .role {
+            font-size: 15px;
+            font-weight: 500;
+            color: #999999;
+            letter-spacing: 0.3px;
+        }
+
+        .overall-score {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overall-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .overall-label {
+            font-size: 10px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* スキルバー */
+        .skills-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px;
+            transition: transform 0.2s ease-out, background 0.2s ease-out;
+            border-radius: 8px;
+        }
+
+        .skill-item:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .skill-name {
+            width: 140px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #cccccc;
+            flex-shrink: 0;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease-out, transform 0.2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover .skill-bar-fill {
+            transform: scaleX(1.01);
+        }
+
+        /* スキルバーのグラデーション - モノトーン */
+        .skill-high .skill-bar-fill {
+            background: linear-gradient(90deg, #ffffff, #e0e0e0);
+            box-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-medium .skill-bar-fill {
+            background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+            box-shadow: 
+                0 0 15px rgba(208, 208, 208, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .skill-low .skill-bar-fill {
+            background: linear-gradient(90deg, #a0a0a0, #808080);
+            box-shadow: 
+                0 0 10px rgba(160, 160, 160, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-value {
+            width: 45px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ツールチップ */
+        .skill-item {
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.95);
+        }
+
+        .skill-item:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .profile-card {
+                flex-direction: column;
+                padding: 24px;
+                gap: 24px;
+            }
+
+            .left-section {
+                align-items: center;
+                text-align: center;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .basic-info {
+                align-items: center;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+
+            .name-section {
+                text-align: center;
+            }
+
+            .overall-score {
+                width: 70px;
+                height: 70px;
+            }
+
+            .overall-number {
+                font-size: 24px;
+            }
+
+            .skill-name {
+                width: 100px;
+                font-size: 14px;
+            }
+
+            .skill-value {
+                font-size: 18px;
+            }
+
+            .skill-bar {
+                height: 24px;
+            }
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <!-- 左側セクション -->
+            <div class="left-section">
+                <div class="avatar">
+                    <!-- アバター画像を入れる場合は <img src="avatar.jpg" alt="Avatar"> -->
+                    YT
+                </div>
+
+                <div class="basic-info">
+                    <div class="basic-info-item">
+                        <div class="basic-info-label">Level</div>
+                        <div class="basic-info-value">42</div>
+                    </div>
+
+                    <div class="basic-info-item level-bar">
+                        <div class="basic-info-label">Experience</div>
+                        <div class="basic-info-value">12,500 / 15,000</div>
+                        <div class="level-progress">
+                            <div class="level-progress-fill" style="width: 83%"></div>
+                        </div>
+                    </div>
+
+                    <div class="basic-info-item">
+                        <div class="basic-info-label">Rank</div>
+                        <div class="rank-badge">
+                            ⬡ Expert
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側セクション -->
+            <div class="right-section">
+                <div class="header">
+                    <div class="name-section">
+                        <div class="name">山田 太郎</div>
+                        <div class="role">プロジェクトマネージャー</div>
+                    </div>
+                    <div class="overall-score">
+                        <div class="overall-number">85</div>
+                        <div class="overall-label">Overall</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <!-- ソフトスキル -->
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">コミュニケーション</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 88%"></div>
+                        </div>
+                        <div class="skill-value">88</div>
+                        <div class="tooltip">
+                            <strong>コミュニケーション能力</strong><br>
+                            明確な説明・傾聴・調整力<br>
+                            検出元: Slack, メール, 会議
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">締切意識</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 92%"></div>
+                        </div>
+                        <div class="skill-value">92</div>
+                        <div class="tooltip">
+                            <strong>締切意識・時間管理</strong><br>
+                            期限遵守率98%・優先順位付け<br>
+                            検出元: Asana, Calendar
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">問題解決</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 85%"></div>
+                        </div>
+                        <div class="skill-value">85</div>
+                        <div class="tooltip">
+                            <strong>問題解決能力</strong><br>
+                            分析力・創造的思考・意思決定<br>
+                            検出元: Jira, ドキュメント
+                        </div>
+                    </div>
+
+                    <!-- リーダーシップ -->
+                    <div class="skill-item skill-high">
+                        <div class="skill-name">プロジェクトマネジメント</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 90%"></div>
+                        </div>
+                        <div class="skill-value">90</div>
+                        <div class="tooltip">
+                            <strong>プロジェクトマネジメント</strong><br>
+                            計画立案・進行管理・完遂力<br>
+                            検出元: プロジェクト管理ツール
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">リーダーシップ</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 82%"></div>
+                        </div>
+                        <div class="skill-value">82</div>
+                        <div class="tooltip">
+                            <strong>リーダーシップ</strong><br>
+                            チームの動機付け・方向性明示<br>
+                            検出元: 会議運営, フィードバック
+                        </div>
+                    </div>
+
+                    <!-- ビジネススキル -->
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">戦略的思考</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 78%"></div>
+                        </div>
+                        <div class="skill-value">78</div>
+                        <div class="tooltip">
+                            <strong>戦略的思考</strong><br>
+                            長期視点・戦略立案・ロードマップ<br>
+                            検出元: 提案書, 企画書
+                        </div>
+                    </div>
+
+                    <!-- アントレプレナーシップ -->
+                    <div class="skill-item skill-low">
+                        <div class="skill-name">構想力</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 72%"></div>
+                        </div>
+                        <div class="skill-value">72</div>
+                        <div class="tooltip">
+                            <strong>構想力・ビジョン策定</strong><br>
+                            新規事業構想・価値創造<br>
+                            検出元: 企画提案, ブレスト
+                        </div>
+                    </div>
+
+                    <div class="skill-item skill-medium">
+                        <div class="skill-name">実行力</div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="width: 86%"></div>
+                        </div>
+                        <div class="skill-value">86</div>
+                        <div class="tooltip">
+                            <strong>実行力・アクション志向</strong><br>
+                            スピード感・やり抜く力<br>
+                            検出元: タスク完了率, 納期実績
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ページ読み込み時のアニメーション
+        window.addEventListener('load', () => {
+            const fills = document.querySelectorAll('.skill-bar-fill');
+            fills.forEach((fill, index) => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 300 + index * 100);
+            });
+
+            const levelFill = document.querySelector('.level-progress-fill');
+            const levelWidth = levelFill.style.width;
+            levelFill.style.width = '0%';
+            setTimeout(() => {
+                levelFill.style.width = levelWidth;
+            }, 300);
+        });
+    </script>
+</body>
+</html>

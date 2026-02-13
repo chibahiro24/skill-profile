@@ -1,202 +1,575 @@
 # Skill Profile
 
-スキルプロファイル管理プロジェクト
+<div align="center">
 
-## 概要
+**AI駆動のオープンソース スキルプロファイル管理システム**
 
-このプロジェクトは、労働市場の個人のスキルプロファイルを提供するものである。特徴的に、個人が自分のスキルについてOwnershipを持ち、社外に持ち出し、オープンに開示できるものとする。アクセス権をユーザーが管理し、必要な場合には企業へ情報提供出来る。
-なお、データは資格や会社での評価、日々の活動ログなど客観的に評価できるものを重視する。
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
+[English](README.md) | [日本語](README.ja.md)
 
-## 機能
+</div>
 
-### 1. ユーザー管理
-- ユーザー登録・認証（OAuth2.0対応）
-- プロフィール基本情報管理
-- アカウント設定（プライバシー設定含む）
+---
 
-### 2. スキル情報管理
-- **スキル登録・編集**
-  - 技術スキル（プログラミング言語、フレームワーク、ツール等）
-  - ビジネススキル（マネジメント、コミュニケーション等）
-  - 言語スキル
-  - 資格・認定情報
-- **スキルレベルの設定**
-  - 自己評価
-  - 習熟度（初級/中級/上級/エキスパート）
-  - 実務経験年数
-- **スキルの証跡管理**
-  - 資格証明書のアップロード
-  - 修了証のアップロード
-  - 第三者評価の記録
+## 🌟 特徴
 
-### 3. 活動ログ・実績管理
-- **プロジェクト経験**
-  - プロジェクト名、期間、役割
-  - 使用技術・スキル
-  - 成果・実績
-- **学習履歴**
-  - オンライン講座の修了記録
-  - 研修・セミナー参加履歴
-  - 読書・自己学習記録
-- **GitHub連携**
-  - リポジトリ活動の自動取得
-  - コントリビューション統計
-  - 使用言語の分析
-- **外部サービス連携**
-  - LinkedIn連携
-  - Stack Overflow連携
-  - Qiita/Zenn等の技術ブログ連携
+Skill Profileは、**全職種の個人がスキルとキャリアを自分でコントロール**できる、透明性のあるオープンソースキャリアプラットフォームです。
 
-### 4. アクセス権限・公開設定
-- **公開レベルの設定**
-  - 完全公開（誰でも閲覧可能）
-  - 限定公開（リンクを知っている人のみ）
-  - 非公開（本人のみ）
-- **項目別の公開制御**
-  - スキル別の公開/非公開設定
-  - プロジェクト別の公開/非公開設定
-- **企業・組織へのアクセス許可**
-  - 一時的なアクセス権限付与（期限設定可能）
-  - アクセス履歴の確認
-  - アクセス権限の取り消し
-- **データエクスポート**
-  - PDF形式での職務経歴書出力
-  - JSON/CSV形式でのデータエクスポート
-  - ポートフォリオサイト用API提供
+### 🎯 全職種対応のスキル可視化
 
-### 5. データ可視化・分析
-- **スキルマップ**
-  - レーダーチャートでのスキル可視化
-  - スキルツリー表示
-  - 強み・弱みの分析
-- **成長トラッキング**
-  - スキル習得の時系列グラフ
-  - 学習時間の統計
-  - 目標達成度の可視化
-- **市場価値分析**
-  - 類似プロファイルとの比較
-  - スキルの需要トレンド表示
-  - 推奨学習パスの提案
+エンジニアだけでなく、**営業、マーケティング、人事、経営層など、あらゆる職種のスキルを評価**：
 
-### 6. キャリア支援機能
-- **目標設定・管理**
-  - 短期/中期/長期目標の設定
-  - マイルストーン管理
-  - 進捗トラッキング
-- **学習推奨**
-  - AIによるスキルギャップ分析
-  - 推奨学習コンテンツの提示
-  - キャリアパスの提案
-- **求人マッチング**
-  - スキルに基づく求人推奨
-  - マッチング度の表示
-  - 足りないスキルの可視化
+- **ソフトスキル**: コミュニケーション、時間管理、問題解決、リーダーシップ
+- **ビジネススキル**: 戦略思考、顧客志向、財務理解、経営センス
+- **アントレプレナーシップ**: 構想力、実行力、リスクテイク、事業開発
+- **ハードスキル**: 職種別の専門スキル（技術、デザイン、営業、財務等）
 
-### 7. 企業向け機能
-- **採用担当者向けビュー**
-  - 候補者のスキルプロファイル閲覧
-  - スキルフィルタリング検索
-  - 候補者比較機能
-- **社内人材管理**
-  - 社員のスキルマップ
-  - チーム編成支援
-  - 研修計画立案支援
+### 🤖 AI自動スキル検出（全職種対応）
 
-### 8. データセキュリティ・プライバシー
-- **データ暗号化**
-  - 保存データの暗号化
-  - 通信の暗号化（SSL/TLS）
-- **監査ログ**
-  - アクセスログの記録
-  - データ変更履歴の保持
-- **GDPR/個人情報保護法対応**
-  - データ削除権（忘れられる権利）
-  - データポータビリティ
-  - 同意管理
+日々の活動ログから**AIが自動的にスキルを抽出**。手動入力の手間を大幅に削減：
 
-## デザイン
+- **コミュニケーション分析**: Slack、メール、会議からコミュニケーション能力を評価
+- **時間管理分析**: カレンダー、タスク管理ツールから締切意識を評価
+- **問題解決分析**: 課題トラッキング、提案書から分析力・実行力を評価
+- **AIペット連携**: ChatGPT、Claudeとの会話から学習・思考スキルを検出
+- **技術活動分析**: GitHub、VSCodeの活動から技術スキルを判定
+- **プライバシー重視**: ローカル処理オプションで機密情報も安心
+
+### 🔍 透明性のあるキャリアパス推奨
+
+**すべてのアルゴリズムを公開**。なぜその推奨なのかを明確に説明：
+
+- **類似プロファイル発見**: あなたと似た経歴の人がどのようなキャリアを辿ったか
+- **スキルギャップ分析**: 目標達成に必要なスキルと現状のギャップを可視化
+- **具体的アクション推奨**: 習得すべきスキル、学習リソース、実践機会を提示
+- **推奨理由の明示**: なぜその推奨なのか、データとロジックを完全公開
+- **バイアス検出・補正**: 性別、年齢等のバイアスを検出し、公平性を保証
+
+### 🔓 オープンアルゴリズム - 他サービスとの最大の差別化
+
+**ブラックボックスなレコメンデーションを排除**。すべてのアルゴリズムをGitHubで公開：
+
+- レコメンデーションのコードが誰でも確認可能
+- 推奨の計算プロセスをステップバイステップで説明
+- バイアス分析結果を定期的に公開
+- コミュニティがアルゴリズムを監査・改善可能
+- 説明可能AI（SHAP、LIME）で各要素の寄与度を可視化
+
+### 🔌 プラグインエコシステム（全職種対応）
+
+誰でもプラグインを開発・共有できるオープンなエコシステム：
+
+- **標準化されたAPI**: 簡単にプラグインを開発できるSDK
+- **多様な連携**: 
+  - **コミュニケーション**: Slack、Teams、Gmail、Zoom
+  - **タスク管理**: Asana、Trello、Jira、Notion
+  - **営業・CRM**: Salesforce、HubSpot
+  - **AI対話**: ChatGPT、Claude、Gemini
+  - **技術**: GitHub、VSCode、Cursor
+  - **学習**: Udemy、Coursera
+- **コミュニティマーケット**: プラグインを公開・共有
+- **セキュア実行**: サンドボックスで安全に実行
+
+### 🔐 個人データのOwnership
+
+あなたのデータは、あなたのもの：
+
+- **完全なコントロール**: いつでもデータをエクスポート・削除可能
+- **柔軟なアクセス制御**: 項目別・期限付きで企業にデータ開示
+- **暗号化**: エンドツーエンドの暗号化でプライバシー保護
+- **GDPR準拠**: 個人情報保護法に完全対応
+
+### 📊 客観的な証跡ベース
+
+主観ではなく、客観的なデータに基づくスキル評価：
+
+- **資格・証明書**: 公式認定の管理と証明
+- **活動ログ**: GitHubコミット、プロジェクト経験
+- **AI分析**: 使用頻度・複雑度からの習熟度推定
+- **第三者評価**: 上司・同僚からのフィードバック
+
+---
+
+## 🚀 クイックスタート
+
+### Docker を使った最速セットアップ
+
+```bash
+# リポジトリのクローン
+git clone https://github.com/YOUR_ORG/skill-profile.git
+cd skill-profile
+
+# Docker Composeで起動
+docker-compose up -d
+
+# ブラウザでアクセス
+open http://localhost:3000
+```
+
+### ローカル開発環境
+
+```bash
+# 依存関係のインストール
+npm install  # またはyarn/pnpm
+
+# 環境変数の設定
+cp .env.example .env
+# .envファイルを編集してAPIキー等を設定
+
+# データベースのセットアップ
+npm run db:setup
+
+# 開発サーバーの起動
+npm run dev
+```
+
+詳細は [DEPLOYMENT.md](DEPLOYMENT.md) を参照してください。
+
+---
+
+## 📖 ドキュメント
+
+### ユーザー向け
+
+- **[ユーザーガイド](./docs/USER_GUIDE.md)** - 基本的な使い方
+- **[キャリアパス機能ガイド](./docs/CAREER_PATH_GUIDE.md)** - キャリアパス推奨機能の詳細
+- **[プライバシーポリシー](./docs/PRIVACY_POLICY.md)** - データの取り扱い
+- **[FAQ](./docs/FAQ.md)** - よくある質問
+
+### 透明性・フェアネス
+
+- **[アルゴリズム透明性ドキュメント](./docs/ALGORITHM_TRANSPARENCY.md)** - すべてのアルゴリズムの詳細説明
+- **[フェアネス監査レポート](./docs/FAIRNESS_REPORT.md)** - 定期的なバイアス分析結果
+- **[コミュニティ監査ガイド](./docs/COMMUNITY_AUDIT.md)** - コミュニティ監査への参加方法
+
+### 開発者向け
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - システムアーキテクチャの詳細
+- **[REQUIREMENTS.md](REQUIREMENTS.md)** - 機能要件・非機能要件
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - コントリビューション方法
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - デプロイ手順
+
+### プラグイン開発者向け
+
+- **[PLUGIN_DEVELOPMENT.md](PLUGIN_DEVELOPMENT.md)** - プラグイン開発ガイド
+- **[Plugin API Reference](./docs/api/plugin-api.md)** - APIリファレンス
+- **[プラグインサンプル](./plugins/examples/)** - サンプルコード
+
+---
+
+## 🎯 主要機能
+
+### 1. 透明性のあるキャリアパス推奨
+
+```mermaid
+graph TB
+    A[現在のスキル] --> B[類似プロファイル検索]
+    B --> C[キャリアパス分析]
+    C --> D[スキルギャップ特定]
+    D --> E[具体的アクション推奨]
+    E --> F[推奨理由の明示]
+    F --> G[ユーザーがアクション実行]
+    G --> H[スキル成長]
+    H --> A
+    
+    style B fill:#e1f5ff
+    style F fill:#fff3e0
+```
+
+**透明性の特徴:**
+- すべてのアルゴリズムをGitHubで公開
+- 推奨の計算プロセスを完全説明
+- バイアス検出・補正結果を公開
+- コミュニティによる監査可能
+
+### 2. AI自動スキル判定（全職種対応）
+
+```mermaid
+graph LR
+    A[日々の活動] --> B[プラグイン]
+    B --> C[ログ収集]
+    C --> D[AI分析]
+    D --> E[スキル検出]
+    E --> F[ユーザー承認]
+    F --> G[プロフィール更新]
+```
+
+**対応プラットフォーム（全職種）:**
+- **コミュニケーション**: Slack / Teams / Gmail / Zoom
+- **タスク管理**: Asana / Trello / Jira / Notion
+- **営業・CRM**: Salesforce / HubSpot
+- **AI対話**: ChatGPT / Claude / Gemini
+- **技術**: GitHub / GitLab / VSCode / Cursor
+- **学習**: Udemy / Coursera / Kindle
+
+### 3. スキルプロファイル管理（全職種対応）
+
+- **包括的スキル体系**: 
+  - ソフトスキル（コミュニケーション、時間管理、問題解決等）
+  - リーダーシップ・マネジメント
+  - ビジネス・戦略スキル
+  - アントレプレナーシップ
+  - 経営スキル
+  - ハードスキル（職種別専門スキル）
+- **100点満点評価**: より細かいレベル管理
+- **証跡管理**: 資格証明書、修了証、活動ログのアップロード
+- **公開制御**: 項目別の詳細な公開設定
+
+### 4. 透明性のあるキャリア支援
+
+- **類似プロファイル発見**: あなたと似た人がどのようなキャリアを歩んだか
+- **キャリアパス分析**: 複数の選択肢と実現可能性を提示
+- **スキルギャップ分析**: 目標とのギャップを定量的に可視化
+- **具体的アクション推奨**: 学習リソース、プロジェクト、コミュニティを推奨
+- **推奨理由の完全説明**: なぜその推奨なのかをデータで説明
+- **成長トラッキング**: スキルの時系列変化を追跡
+
+### 4. データ可視化
+
+- **レーダーチャート**: スキル分野別の可視化
+- **スキルツリー**: 階層的なスキル表示
+- **成長グラフ**: 時系列でのスキル推移
+- **市場価値分析**: 類似プロファイルとの比較
+
+### 5. アクセス制御
+
+- **柔軟な権限管理**: 項目別・期限付きのアクセス許可
+- **アクセスログ**: 誰がいつ閲覧したかを記録
+- **即時取り消し**: ワンクリックで権限を取り消し
+- **データエクスポート**: PDF、JSON、CSV形式で出力
+
+### 6. 企業向け機能
+
+- **候補者検索**: スキルフィルタリング検索
+- **社内スキルマップ**: 組織全体のスキル可視化
+- **チーム編成支援**: 最適なチーム構成の提案
+- **研修計画**: スキルギャップに基づく計画立案
+
+---
+
+## 🔌 プラグイン開発
+
+Skill Profileは、誰でもプラグインを開発・共有できるオープンなエコシステムです。
+
+### プラグインの作成
+
+```bash
+# Plugin Development SDKのインストール
+npm install -g @skill-profile/plugin-sdk
+
+# 新しいプラグインの作成
+skill-profile-cli plugin create my-awesome-plugin
+
+# プラグインのテスト
+cd my-awesome-plugin
+npm test
+
+# プラグインのビルド
+npm run build
+```
+
+### プラグインの基本構造
+
+```typescript
+import { Plugin, PluginConfig, ActivityLog, DetectedSkill } from '@skill-profile/plugin-sdk';
+
+export class MyAwesomePlugin implements Plugin {
+  metadata = {
+    name: 'my-awesome-plugin',
+    version: '1.0.0',
+    description: '素晴らしいプラグイン',
+    permissions: ['read:logs', 'write:skills']
+  };
+
+  async collectLogs(config: PluginConfig): Promise<ActivityLog[]> {
+    // ログ収集ロジック
+    return [];
+  }
+
+  async extractSkills(logs: ActivityLog[]): Promise<DetectedSkill[]> {
+    // スキル抽出ロジック
+    return [];
+  }
+
+  async healthCheck(): Promise<PluginHealth> {
+    return { status: 'healthy' };
+  }
+}
+```
+
+詳細は [PLUGIN_DEVELOPMENT.md](PLUGIN_DEVELOPMENT.md) を参照してください。
+
+---
+
+## 🏗️ システムアーキテクチャ
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Client Layer                        │
+│  Web App (React)  |  Mobile App  |  Public Profile     │
+└─────────────────────────────────────────────────────────┘
+                            │
+┌─────────────────────────────────────────────────────────┐
+│                      API Gateway                        │
+│         Authentication | Rate Limiting | CORS           │
+└─────────────────────────────────────────────────────────┘
+                            │
+┌─────────────────────────────────────────────────────────┐
+│                      API Layer                          │
+│    REST API  |  GraphQL API  |  Plugin API (gRPC)      │
+└─────────────────────────────────────────────────────────┘
+                            │
+┌─────────────────────────────────────────────────────────┐
+│                    Plugin Layer                         │
+│  ChatGPT | Claude | GitHub | Notion | Custom Plugins   │
+└─────────────────────────────────────────────────────────┘
+                            │
+┌─────────────────────────────────────────────────────────┐
+│                   Service Layer                         │
+│  User | Skill | AI Analysis | Log Collection | Access  │
+└─────────────────────────────────────────────────────────┘
+                            │
+┌─────────────────────────────────────────────────────────┐
+│                     Data Layer                          │
+│  PostgreSQL | MongoDB | ChromaDB | Redis | S3          │
+└─────────────────────────────────────────────────────────┘
+```
+
+詳細は [ARCHITECTURE.md](ARCHITECTURE.md) を参照してください。
+
+---
+
+## 🛠️ 技術スタック
+
+### フロントエンド
+- **React 18+** / Vue 3+ - UIフレームワーク
+- **TypeScript** - 型安全な開発
+- **Tailwind CSS** - モダンなスタイリング
+- **D3.js / Recharts** - データ可視化
+
+### バックエンド
+- **Node.js (TypeScript)** / Python / Go - サーバーサイド
+- **Express / NestJS / FastAPI** - APIフレームワーク
+- **PostgreSQL** - メインデータベース
+- **Redis** - キャッシュ・セッション管理
+
+### AI/ML
+- **LangChain** - LLM統合フレームワーク
+- **OpenAI / Anthropic SDK** - AI API連携
+- **ChromaDB** - ベクトルデータベース
+- **spaCy / Transformers** - 自然言語処理
+
+### インフラ
+- **Docker / Kubernetes** - コンテナ化・オーケストレーション
+- **GitHub Actions** - CI/CD
+- **AWS / GCP / Azure** - クラウドプラットフォーム
+
+---
+
+## 📊 ロードマップ
+
+### Phase 1: OSS基盤整備 ✅
+- [x] オープンソース化
+- [x] ライセンス選定（Apache 2.0）
+- [x] コントリビューションガイドライン
+- [x] アーキテクチャドキュメント
+
+### Phase 2: プラグインシステム（進行中）
+- [ ] プラグインAPI設計・実装
+- [ ] Plugin Development SDK
+- [ ] サンプルプラグイン（GitHub、ChatGPT）
+- [ ] プラグインマーケット（ベータ）
+
+### Phase 3: AI連携コア機能
+- [ ] ログ収集基盤
+- [ ] AI分析エンジン
+- [ ] スキル自動検出
+- [ ] ユーザー承認フロー
+
+### Phase 4: 主要プラグイン
+- [ ] ChatGPTプラグイン
+- [ ] Claudeプラグイン
+- [ ] GitHubプラグイン（拡張版）
+- [ ] VSCodeプラグイン
+
+### Phase 5: プライバシー強化
+- [ ] ローカル処理オプション
+- [ ] エンドツーエンド暗号化
+- [ ] 同意管理システム
+- [ ] 自動削除ポリシー
+
+### Phase 6: コミュニティ機能
+- [ ] プラグインマーケット（正式版）
+- [ ] コミュニティフォーラム
+- [ ] ドキュメントポータル
+- [ ] プラグインレビューシステム
+
+---
+
+## 🤝 コントリビューション
+
+Skill Profileはコミュニティ駆動のプロジェクトです。あらゆる形の貢献を歓迎します！
+
+### 貢献方法
+
+1. **コードコントリビューション**
+   - バグ修正、新機能の追加、パフォーマンス改善
+   - [CONTRIBUTING.md](CONTRIBUTING.md)を参照
+
+2. **プラグイン開発**
+   - 新しいプラグインの開発・公開
+   - [PLUGIN_DEVELOPMENT.md](PLUGIN_DEVELOPMENT.md)を参照
+
+3. **ドキュメント**
+   - ドキュメントの改善、翻訳、チュートリアル作成
+
+4. **Issue報告・機能提案**
+   - バグレポート、機能リクエスト
+
+5. **レビュー**
+   - プルリクエストのレビュー、フィードバック
+
+### 開発環境のセットアップ
+
+```bash
+# リポジトリのフォーク
+gh repo fork YOUR_ORG/skill-profile
+
+# クローン
+git clone https://github.com/YOUR_USERNAME/skill-profile.git
+cd skill-profile
+
+# ブランチ作成
+git checkout -b feature/your-feature-name
+
+# 開発
+npm install
+npm run dev
+
+# テスト
+npm test
+
+# コミット
+git add .
+git commit -m "feat: 新機能の説明"
+
+# プッシュ
+git push origin feature/your-feature-name
+
+# プルリクエスト作成
+gh pr create
+```
+
+### 行動規範
+
+このプロジェクトは [Contributor Covenant](CODE_OF_CONDUCT.md) の行動規範を採用しています。参加することで、この規範を遵守することに同意したものとみなされます。
+
+---
+
+## 🔒 セキュリティ
+
+セキュリティ上の脆弱性を発見した場合は、公開Issueではなく [SECURITY.md](SECURITY.md) の手順に従って報告してください。
+
+**重要:**
+- APIキーや認証情報は絶対にコミットしない
+- `.env`ファイルは`.gitignore`に含まれている
+- プラグインは サンドボックスで実行される
+- 全データはAES-256で暗号化
+
+---
+
+## 📄 ライセンス
+
+このプロジェクトは [Apache License 2.0](LICENSE) の下でライセンスされています。
+
+- ✅ 商用利用可能
+- ✅ 改変・配布可能
+- ✅ 特許保護あり
+- ℹ️ 著作権表示と免責事項の記載が必要
+
+---
+
+## 🎨 デザイン
 
 このプロジェクトのUIデザインはFigmaで管理されています。
 
 ### Figmaファイル
 
-> 💡 Figmaファイルを作成したら、以下のリンクを更新してください
-
-- **デザインシステム**: [Skill Profile - Design System](https://www.figma.com/file/YOUR_FILE_KEY/Design-System) ※要更新
-- **ワイヤーフレーム**: [Skill Profile - Wireframes](https://www.figma.com/file/YOUR_FILE_KEY/Wireframes) ※要更新
-- **UIデザイン**: [Skill Profile - UI Design](https://www.figma.com/file/YOUR_FILE_KEY/UI-Design) ※要更新
-- **プロトタイプ**: [Skill Profile - Prototype](https://www.figma.com/file/YOUR_FILE_KEY/Prototype) ※要更新
-
-#### Figmaファイルの作成方法
-
-1. [Figma](https://www.figma.com/)にログイン
-2. 新しいデザインファイルを作成
-3. ファイル名を設定（例：`Skill Profile - Design System`）
-4. 右上の「Share」から「Copy link」でリンクをコピー
-5. 上記のREADMEのリンクを更新
-
-詳細は [Figma-GitHub連携ガイド](./docs/figma-github-integration.md) を参照
+- **デザインシステム**: [Skill Profile - Design System](https://www.figma.com/file/YOUR_FILE_KEY/Design-System)
+- **ワイヤーフレーム**: [Skill Profile - Wireframes](https://www.figma.com/file/YOUR_FILE_KEY/Wireframes)
+- **UIデザイン**: [Skill Profile - UI Design](https://www.figma.com/file/YOUR_FILE_KEY/UI-Design)
 
 ### デザイン関連ドキュメント
 
-- [デザインガイドライン](./docs/DESIGN.md) - デザインシステム、コンポーネント、スタイルガイド
-- [Figmaワークフロー](./docs/figma-workflow.md) - デザインから開発までの連携方法
-- [デザイントークン](./design-tokens.json) - カラー、タイポグラフィ、スペーシングの定義
+- [デザインガイドライン](./docs/DESIGN.md)
+- [FIFAスタイルデザイン仕様書](./docs/fifa-style-design-spec.md) - スポーツゲーム風UIの詳細仕様
+- [モノトーン vs カラフル比較](./docs/monotone-design-comparison.md) - デザイン選択ガイド
+- [Figmaクイックスタートガイド](./docs/fifa-style-figma-quickstart.md) - 約2時間で作成できる手順
+- [Figma-GitHub連携ガイド](./docs/figma-github-integration.md)
+- [Figmaワークフロー](./docs/figma-workflow.md)
+- [デザイントークン](./design-tokens.json)
 
-### デザイナー向け情報
+### 🎮 プロトタイプ
 
-Figmaでデザインを作成・編集する際は、以下のドキュメントを参照してください：
-- デザインシステムのコンポーネントを使用
-- デザイントークンに準拠したスタイル設定
-- レスポンシブデザイン（Desktop/Tablet/Mobile）への対応
+- **[フルビュー（推奨）](./prototype/skill-profile-full.html)** ⭐
+  - 包括的なプロフィールダッシュボード
+  - プロフィール、スキル、プロジェクト、資格、アクティビティ
+  - グリッドレイアウト
+  - 企業採用・ポートフォリオに最適
+  
+- **[シンプルビュー](./prototype/fifa-style-profile.html)**
+  - スキル表示に特化
+  - ミニマルデザイン
+  - スキル可視化・評価レポート向け
+  
+**共通機能**：
+  - モノトーン配色（黒・白・グレー）
+  - インタラクティブなアニメーション
+  - ホバーエフェクト
+  - レスポンシブデザイン対応
+  - 詳細: [prototype/README.md](./prototype/README.md)
 
-### 開発者向け情報
+---
 
-実装時は以下を参照してください：
-- Figma Dev Modeでスタイルとスペーシングを確認
-- `design-tokens.json`のトークンを使用
-- アセットは`public/assets/`ディレクトリに配置
+## 🌐 コミュニティ
 
-詳細は[Figmaワークフロー](./docs/figma-workflow.md)を参照してください。
+- **GitHub Discussions**: [質問・議論](https://github.com/YOUR_ORG/skill-profile/discussions)
+- **Discord**: [リアルタイムチャット](https://discord.gg/YOUR_INVITE)（準備中）
+- **Twitter**: [@skillprofile](https://twitter.com/skillprofile)（準備中）
+- **ブログ**: [技術ブログ](https://blog.skillprofile.example.com)（準備中）
 
-## セットアップ
+---
 
-```bash
-# リポジトリのクローン
-git clone <repository-url>
-cd skill-profile
+## 🙏 謝辞
 
-# 依存関係のインストール
-# (開発環境に応じてコマンドを追加してください)
-```
+このプロジェクトは以下のオープンソースプロジェクトに支えられています：
 
-## 使い方
+- [LangChain](https://github.com/langchain-ai/langchain) - LLM統合フレームワーク
+- [ChromaDB](https://github.com/chroma-core/chroma) - ベクトルデータベース
+- [PostgreSQL](https://www.postgresql.org/) - データベース
+- [React](https://react.dev/) - UIライブラリ
+- その他多数の素晴らしいOSSプロジェクト
 
-```bash
-# アプリケーションの起動方法をここに記述
-```
+---
 
-## 開発
+## 📞 サポート
 
-### 必要な環境
+質問や問題がある場合は、以下の方法でサポートを受けられます：
 
-- 開発に必要な環境や言語バージョンを記述
+1. **GitHub Discussions** - 一般的な質問や議論
+2. **GitHub Issues** - バグレポートや機能リクエスト
+3. **ドキュメント** - [docs/](./docs/)ディレクトリ
+4. **メール** - support@skillprofile.example.com（準備中）
 
-### 開発手順
+---
 
-```bash
-# 開発サーバーの起動など
-```
+<div align="center">
 
-## ライセンス
+**⭐ このプロジェクトが役に立ったら、ぜひスターをつけてください！ ⭐**
 
-MIT License
+Made with ❤️ by the Skill Profile Community
 
-## 貢献
-
-プルリクエストを歓迎します。大きな変更の場合は、まずissueを開いて変更内容を議論してください。
-
-## 作者
-
-[@hiroyuki](https://github.com/hiroyuki)
+</div>
