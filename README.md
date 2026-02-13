@@ -93,13 +93,41 @@ Skill Profileは、**全職種の個人がスキルとキャリアを自分で�
 
 ---
 
+## 🎨 プロトタイプを試す
+
+プロジェクトのUIプロトタイプをすぐに確認できます：
+
+### ダッシュボードプロトタイプ（推奨）
+
+📂 **場所**: [`prototype/dashboard/`](./prototype/dashboard/)
+
+**実装済みページ:**
+- 🏠 **ダッシュボード** - ホーム画面、統計表示
+- 👤 **プロフィール** - ユーザー情報表示・編集
+- ⭐ **スキル一覧** - スキル管理、フィルター機能
+- ⚙️ **設定** - アカウント設定、プライバシー設定
+
+**開き方:**
+```bash
+# プロトタイプをブラウザで開く
+open prototype/dashboard/index.html
+
+# または、ローカルサーバーで実行
+python -m http.server 8000
+# ブラウザで http://localhost:8000/prototype/dashboard/ を開く
+```
+
+詳細は [prototype/dashboard/README.md](./prototype/dashboard/README.md) を参照してください。
+
+---
+
 ## 🚀 クイックスタート
 
 ### Docker を使った最速セットアップ
 
 ```bash
 # リポジトリのクローン
-git clone https://github.com/YOUR_ORG/skill-profile.git
+git clone https://github.com/chibahiro24/skill-profile.git
 cd skill-profile
 
 # Docker Composeで起動
