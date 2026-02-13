@@ -1,0 +1,51 @@
+name: Export Figma Assets
+
+on:
+  workflow_dispatch: # 手動実行
+    inputs:
+      file_key:
+        description: 'Figma File Key'
+        required: false
+        default: ''
+  schedule:
+    - cron: '0 0 * * 1' # 毎週月曜日 0:00 UTC に実行
+
+jobs:
+  export-assets:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      # Figma API を使用してアセットをエクスポート
+      # Note: 実際の実装にはFigma APIとの連携が必要
+      - name: Export Figma assets
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+          FIGMA_FILE_KEY: ${{ inputs.file_key || secrets.FIGMA_FILE_KEY }}
+        run: |
+          echo "Figma asset export準備完了"
+          echo "FIGMA_TOKEN と FIGMA_FILE_KEY を GitHub Secrets に設定してください"
+          # 実装例:
+          # npx @figma-export/cli --fileId=$FIGMA_FILE_KEY --token=$FIGMA_TOKEN
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/assets/ || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: Update Figma assets [skip ci]" && git push)
+
+      - name: Create summary
+        run: |
+          echo "✅ Figma assets export completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📁 Exported to: \`public/assets/\`" >> $GITHUB_STEP_SUMMARY

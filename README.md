@@ -121,10 +121,22 @@
 
 ### Figmaファイル
 
-- **デザインシステム**: [Skill Profile - Design System](#) ※準備中
-- **ワイヤーフレーム**: [Skill Profile - Wireframes](#) ※準備中
-- **UIデザイン**: [Skill Profile - UI Design](#) ※準備中
-- **プロトタイプ**: [Skill Profile - Prototype](#) ※準備中
+> 💡 Figmaファイルを作成したら、以下のリンクを更新してください
+
+- **デザインシステム**: [Skill Profile - Design System](https://www.figma.com/file/YOUR_FILE_KEY/Design-System) ※要更新
+- **ワイヤーフレーム**: [Skill Profile - Wireframes](https://www.figma.com/file/YOUR_FILE_KEY/Wireframes) ※要更新
+- **UIデザイン**: [Skill Profile - UI Design](https://www.figma.com/file/YOUR_FILE_KEY/UI-Design) ※要更新
+- **プロトタイプ**: [Skill Profile - Prototype](https://www.figma.com/file/YOUR_FILE_KEY/Prototype) ※要更新
+
+#### Figmaファイルの作成方法
+
+1. [Figma](https://www.figma.com/)にログイン
+2. 新しいデザインファイルを作成
+3. ファイル名を設定（例：`Skill Profile - Design System`）
+4. 右上の「Share」から「Copy link」でリンクをコピー
+5. 上記のREADMEのリンクを更新
+
+詳細は [Figma-GitHub連携ガイド](./docs/figma-github-integration.md) を参照
 
 ### デザイン関連ドキュメント
 
